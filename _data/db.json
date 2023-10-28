@@ -1,0 +1,28 @@
+{
+  "tickets": [
+    {
+      "title": "Watch face",
+      "body": "Create Nike watch face for apple watch.",
+      "priority": "low",
+      "user_email": "ivo@abv.bg",
+      "id": "TkGxDPF"
+    },
+    {
+      "title": "fix authentication",
+      "body": "fix token check and add logout method",
+      "priority": "medium",
+      "user_email": "ivo@abv.bg",
+      "id": "a2yBIVS"
+    }
+  ],
+  "users": [
+    {
+      "user": "ivo",
+      "password": "pass"
+    },
+    {
+      "user": "ivolinio",
+      "password": "pass"
+    }
+  ]
+}
