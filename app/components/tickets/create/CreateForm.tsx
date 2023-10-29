@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-type priorityTypes = "low' | 'medium' | 'high'";
+type priorityTypes = 'low' | 'medium' | 'high';
 
 export const CreateForm = () => {
 	const router = useRouter();
 	const [title, setTitle] = useState<string>();
 	const [body, setBody] = useState<string>();
-	const [priority, setPriority] = useState('low');
+	const [priority, setPriority] = useState<priorityTypes>('low');
 	const [email, setEmail] = useState<string>();
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -55,7 +55,10 @@ export const CreateForm = () => {
 			</label>
 			<label>
 				<span>Priority:</span>
-				<select value={priority} onChange={(e) => setPriority(e.target.value)}>
+				<select
+					value={priority}
+					onChange={(e) => setPriority(e.target.value as priorityTypes)}
+				>
 					<option value='low'>Low Priority</option>
 					<option value='medium'>Medium Priority</option>
 					<option value='high'>High Priority</option>

@@ -1,0 +1,8 @@
+nav {
+	justify-content: space-between;
+	& .nav-board {
+		display: flex;
+		gap: 15px;
+		align-items: center;
+	}
+}

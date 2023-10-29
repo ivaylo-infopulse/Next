@@ -1,8 +1,8 @@
 'use client';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import './globals.css';
 import { Rubik } from 'next/font/google';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 const rubik = Rubik({ subsets: ['latin'] });
 
@@ -12,22 +12,27 @@ const metadata = {
 };
 
 interface RootLayoutProps {
-	children: ReactNode;
+	children: ReactNode | any;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
 	const navigate = useRouter();
+	const pathName = usePathname();
+	const [token, setToken] = useState<any>('');
 
 	useEffect(() => {
-		const token = localStorage.getItem('token');
-		if (!token) {
-			navigate.push('/');
-		}
-	});
+		const storedToken = localStorage.getItem('token');
+
+		!storedToken && pathName !== '/'
+			? navigate.push('/')
+			: setToken(storedToken);
+	}, [navigate, pathName]);
 
 	return (
 		<html lang='en'>
-			<body className={rubik.className}>{children}</body>
+			<body className={rubik.className}>
+				{pathName === '/' || token ? children : null}
+			</body>
 		</html>
 	);
 }
