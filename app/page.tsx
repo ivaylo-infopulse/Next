@@ -42,7 +42,7 @@ const Login = () => {
 
 			if (userExists) {
 				const token = uuidv4();
-				const expirationTime = Date.now() + 4 * 1000;
+				const expirationTime = Date.now() + 60 * 60 * 1000;
 				const authData = {
 					token: token,
 					expirationTime: expirationTime,
