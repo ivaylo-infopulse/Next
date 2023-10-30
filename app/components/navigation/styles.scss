@@ -5,4 +5,12 @@ nav {
 		gap: 15px;
 		align-items: center;
 	}
+
+	& .logout-btn {
+		background-color: #d4d4d4ba;
+		padding: 6px 15px;
+		&:hover {
+			background-color: #d3d3d3de;
+		}
+	}
 }

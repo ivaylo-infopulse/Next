@@ -144,3 +144,7 @@ form {
         my-10 mx-auto 
         max-w-5xl;
 }
+
+.login-btn {
+	width: 100%;
+}

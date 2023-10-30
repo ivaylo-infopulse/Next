@@ -1,20 +1,15 @@
 'use client';
-import React from 'react';
+
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState, FormEvent, useEffect } from 'react';
-import { object, string, ValidationError } from 'yup';
-import { v4 as uuidv4 } from 'uuid';
-import Link from 'next/link';
+import { ValidationError } from 'yup';
+import { RegistrationSchema } from '../validation/registrationSchema';
 
-const validationSchema = object({
-	user: string().required('Username is required'),
-	password: string().required('Password is required'),
-});
-
-const Login = () => {
+const Register = () => {
 	const navigate = useRouter();
-	const [user, setUser] = useState<string>();
-	const [password, setPassword] = useState<string>();
+	const [user, setUser] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [confirmPass, setConfirmPass] = useState<string>('');
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const [users, setUsers] = useState<string[]>();
 
@@ -30,28 +25,27 @@ const Login = () => {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			await validationSchema.validate(
-				{ user, password },
+			await RegistrationSchema.validate(
+				{ user, password, confirmPass, users },
 				{ abortEarly: false }
 			);
 
 			setErrors({});
-			const userExists = users?.find(
-				(data: any) => data.user === user && data.password === password
-			);
+			const userExists = users?.find((data: any) => {
+				return data.user === user;
+			});
 
-			if (userExists) {
-				const token = uuidv4();
-				const expirationTime = Date.now() + 4 * 1000;
-				const authData = {
-					token: token,
-					expirationTime: expirationTime,
-				};
+			if (!userExists) {
+				const response = await fetch('http://localhost:4000/users', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ user, password }),
+				});
 
-				localStorage.setItem('authData', JSON.stringify(authData));
-				navigate.push('/components');
-			} else {
-				setErrors({ password: 'wrong username or password' });
+				const data = await response.json();
+				navigate.push('/');
 			}
 		} catch (err) {
 			if (err instanceof ValidationError) {
@@ -63,9 +57,10 @@ const Login = () => {
 			}
 		}
 	};
+
 	return (
 		<form onSubmit={handleSubmit}>
-			<h2>Login Page</h2>
+			<h2>Registration Page</h2>
 			<hr />
 
 			<input
@@ -86,16 +81,24 @@ const Login = () => {
 			/>
 			{errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
 
-			<div className='flex flex-col  justify-center my-8 gap-3'>
-				<button type='submit' className='btn-primary login-btn'>
-					LogIn
+			<input
+				type='password'
+				placeholder='Confirm Password'
+				value={confirmPass}
+				onChange={(e: ChangeEvent<HTMLInputElement>) =>
+					setConfirmPass(e.target.value)
+				}
+			/>
+			{errors.confirmPass && (
+				<div style={{ color: 'red' }}>{errors.confirmPass}</div>
+			)}
+
+			<div className='flex justify-center my-8'>
+				<button type='submit' className='btn-primary'>
+					Register
 				</button>
-				<Link href={'/registration'}>
-					<button className='btn-primary'>Go To Register</button>
-				</Link>
 			</div>
 		</form>
 	);
 };
-
-export default Login;
+export default Register;

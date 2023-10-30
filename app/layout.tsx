@@ -18,20 +18,24 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
 	const navigate = useRouter();
 	const pathName = usePathname();
-	const [token, setToken] = useState<any>('');
+	const [token, setToken] = useState<string>();
 
 	useEffect(() => {
-		const storedToken = localStorage.getItem('token');
+		const lsToken: string | null = localStorage.getItem('authData');
+		const storedToken = JSON.parse(lsToken as string);
 
-		!storedToken && pathName !== '/'
-			? navigate.push('/')
+		(!storedToken && pathName !== '/registration') ||
+		Date.now() > storedToken.expirationTime
+			? (navigate.push('/'), localStorage.removeItem('authData'))
 			: setToken(storedToken);
 	}, [navigate, pathName]);
 
 	return (
 		<html lang='en'>
 			<body className={rubik.className}>
-				{pathName === '/' || token ? children : null}
+				{pathName === '/' || pathName === '/registration' || token
+					? children
+					: null}
 			</body>
 		</html>
 	);

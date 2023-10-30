@@ -7,7 +7,7 @@ import './styles.scss';
 
 export const Navbar = () => {
 	const handleLogOut = () => {
-		localStorage.removeItem('token');
+		localStorage.removeItem('authData');
 	};
 
 	return (
@@ -28,7 +28,7 @@ export const Navbar = () => {
 				</Link>
 			</div>
 
-			<Link onClick={handleLogOut} href='/'>
+			<Link className='logout-btn' onClick={handleLogOut} href='/'>
 				LogOut
 			</Link>
 		</nav>

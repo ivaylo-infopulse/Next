@@ -35,7 +35,8 @@
 		"app/tickets/TicketList.tsx",
 		"app/components/dashboard/layout.tsx",
 		"app/not-found.tsx",
-		"app/loading.tsx"
+		"app/loading.tsx",
+		"app/register.jsx"
 	],
 	"exclude": ["node_modules"]
 }
