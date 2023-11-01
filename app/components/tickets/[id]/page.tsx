@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 import { DeleteButton } from '../delete/DeleteButton';
 import { ticketsObj } from '../TicketsList';
+import { Suspense } from 'react';
+import Loading from '@/app/loading';
 
 export const dynamicParams = true;
 
@@ -39,14 +41,18 @@ const TicketDetails = async ({
 			<nav>
 				<h2>Ticket Details</h2>
 			</nav>
-			<div className='card'>
-				<h3>{ticket.title}</h3>
-				<small>Created by {ticket.user_email}</small>
-				<p>{ticket.body}</p>
-				<div className={`pill ${ticket.priority}`}>
-					{ticket.priority} priority
+			<div className='nav-content'>
+				<div className='card'>
+					<Suspense fallback={<Loading />}>
+						<h3>{ticket.title}</h3>
+						<small>Created by {ticket.user_email}</small>
+						<p>{ticket.body}</p>
+						<div className={`pill ${ticket.priority}`}>
+							{ticket.priority} priority
+						</div>
+						<DeleteButton id={ticket.id} />
+					</Suspense>
 				</div>
-				<DeleteButton id={ticket.id} />
 			</div>
 		</>
 	);

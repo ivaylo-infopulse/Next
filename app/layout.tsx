@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import './globals.css';
 import { Rubik } from 'next/font/google';
 import { useRouter, usePathname } from 'next/navigation';
+import { RecoilRoot } from 'recoil';
 
 const rubik = Rubik({ subsets: ['latin'] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 		const storedToken = JSON.parse(lsToken as string);
 
 		(!storedToken && pathName !== '/registration') ||
-		Date.now() > storedToken.expirationTime
+		Date.now() > storedToken?.expirationTime
 			? (navigate.push('/'), localStorage.removeItem('authData'))
 			: setToken(storedToken);
 	}, [navigate, pathName]);
@@ -33,9 +34,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang='en'>
 			<body className={rubik.className}>
-				{pathName === '/' || pathName === '/registration' || token
-					? children
-					: null}
+				{pathName === '/' || pathName === '/registration' || token ? (
+					<RecoilRoot>{children}</RecoilRoot>
+				) : null}
 			</body>
 		</html>
 	);

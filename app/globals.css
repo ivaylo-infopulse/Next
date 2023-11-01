@@ -148,3 +148,7 @@ form {
 .login-btn {
 	width: 100%;
 }
+
+.input-error {
+	color: red;
+}

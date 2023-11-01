@@ -1,30 +1,44 @@
 {
-	"tickets": [
-		{
-			"title": "Watch face",
-			"body": "Create Nike watch face for apple watch.",
-			"priority": "low",
-			"user_email": "ivo@abv.bg",
-			"id": "TkGxDPF"
-		},
-		{
-			"title": "add alert",
-			"body": "please add alert on log-out",
-			"priority": "medium",
-			"user_email": "ivo@abv.bg",
-			"id": "a2yBIVS"
-		}
-	],
-	"users": [
-		{
-			"user": "ivo",
-			"password": "pass",
-			"id": 1
-		},
-		{
-			"user": "snupi1530",
-			"password": "0897882646",
-			"id": 2
-		}
-	]
+  "tickets": [
+    {
+      "title": "Watch face",
+      "body": "Create Nike watch face for apple watch.",
+      "priority": "low",
+      "user_email": "ivo@abv.bg",
+      "id": "TkGxDPF"
+    },
+    {
+      "title": "add alert",
+      "body": "please add alert on log-out",
+      "priority": "medium",
+      "user_email": "ivo@abv.bg",
+      "id": "a2yBIVS"
+    },
+    {
+      "title": "check register",
+      "body": "check register",
+      "priority": "high",
+      "user_email": "ivo",
+      "id": "Uls629H"
+    },
+    {
+      "title": "register must be checked",
+      "body": "please check register",
+      "priority": "medium",
+      "user_email": "snupi1530",
+      "id": "8wyQiAv"
+    }
+  ],
+  "users": [
+    {
+      "user": "ivo",
+      "password": "pass",
+      "id": 1
+    },
+    {
+      "user": "snupi1530",
+      "password": "snupi123",
+      "id": 2
+    }
+  ]
 }
