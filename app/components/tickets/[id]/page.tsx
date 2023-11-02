@@ -47,7 +47,12 @@ const TicketDetails = async ({
 				<div className='card'>
 					<Suspense fallback={<Loading />}>
 						<h3>{ticket.title}</h3>
-						<small>Created by {ticket.user}</small>
+						<div className='ticket-managers'>
+							<small>Created by {ticket.user}</small>
+							{ticket.editUser && ticket.editUser !== ticket.user && (
+								<small>Edited by {ticket.editUser}</small>
+							)}
+						</div>
 						<p>{ticket.body}</p>
 						<div className={`pill ${ticket.priority}`}>
 							{ticket.priority} priority

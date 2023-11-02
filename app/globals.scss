@@ -216,3 +216,8 @@ form {
 	visibility: visible;
 	opacity: 1;
 }
+
+.ticket-managers {
+	display: flex;
+	flex-direction: column;
+}

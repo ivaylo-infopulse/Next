@@ -1,23 +1,25 @@
 {
   "tickets": [
     {
-      "title": "first ticket1",
+      "title": "first ticket",
       "user": "snupi1530",
+      "editUser": "ivo",
       "body": "new ticket",
       "priority": "medium",
       "id": 1
     },
     {
-      "title": "my task1",
+      "title": "my task",
       "user": "snupi1530",
       "body": "to be done!",
       "priority": "low",
       "id": 3
     },
     {
-      "title": "another one1",
+      "title": "another one",
       "user": "ivo",
-      "body": "new one",
+      "editUser": "snupi1530",
+      "body": "one more",
       "priority": "high",
       "id": 4
     }

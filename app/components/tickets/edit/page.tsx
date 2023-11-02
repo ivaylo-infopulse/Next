@@ -9,10 +9,10 @@ const EditTicket = () => {
 	const navigate = useRouter();
 	const id = useSearchParams().get('id');
 	const [title, setTitle] = useState<string>();
+	const [user, setUser] = useState<string>();
 	const [body, setBody] = useState<string>();
 	const [priority, setPriority] = useState<priorityTypes>('low');
-	const user = useRecoilValue(userState);
-	console.log(user);
+	const currentUser = useRecoilValue(userState);
 
 	useEffect(() => {
 		const fetchTicket = async () => {
@@ -20,6 +20,7 @@ const EditTicket = () => {
 				const response = await fetch(`http://localhost:4000/tickets/${id}`);
 				const data = await response.json();
 				setTitle(data.title);
+				setUser(data.user);
 				setBody(data.body);
 				setPriority(data.priority);
 			} catch (error) {
@@ -35,6 +36,7 @@ const EditTicket = () => {
 			const ticket = {
 				title,
 				user,
+				editUser: currentUser,
 				body,
 				priority,
 			};
