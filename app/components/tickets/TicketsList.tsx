@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { DeleteButton } from './delete/DeleteButton';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 async function getTickets() {
 	await new Promise((resolve) => setTimeout(resolve, 500));
@@ -14,9 +16,9 @@ async function getTickets() {
 export interface ticketsObj {
 	id: string;
 	title: string;
+	user: string;
 	body: string;
 	priority: string;
-	user_email: string;
 }
 
 export const TicketList = async () => {
@@ -34,6 +36,12 @@ export const TicketList = async () => {
 						</div>
 					</Link>
 					<DeleteButton id={ticket.id} />
+					<Link href={`/components/tickets/edit?id=${ticket.id}`}>
+						<div className='edit-ticket'>
+							<FontAwesomeIcon icon={faEdit} />
+							<span className='tooltiptext'>Edit</span>
+						</div>
+					</Link>
 				</div>
 			))}
 			{tickets.length === 0 && (

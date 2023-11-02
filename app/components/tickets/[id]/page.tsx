@@ -3,13 +3,15 @@ import { DeleteButton } from '../delete/DeleteButton';
 import { ticketsObj } from '../TicketsList';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
+import Link from 'next/link';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
 	const res = await fetch('http://localhost:4000/tickets');
 	const tikets: [ticketsObj] = await res.json();
-
 	return tikets.map((ticket) => ({
 		id: ticket.id,
 	}));
@@ -18,7 +20,7 @@ export async function generateStaticParams() {
 async function getTicket(id: string | undefined) {
 	const res = await fetch('http://localhost:4000/tickets/' + id, {
 		next: {
-			revalidate: 60,
+			revalidate: 0,
 		},
 	});
 
@@ -45,12 +47,18 @@ const TicketDetails = async ({
 				<div className='card'>
 					<Suspense fallback={<Loading />}>
 						<h3>{ticket.title}</h3>
-						<small>Created by {ticket.user_email}</small>
+						<small>Created by {ticket.user}</small>
 						<p>{ticket.body}</p>
 						<div className={`pill ${ticket.priority}`}>
 							{ticket.priority} priority
 						</div>
 						<DeleteButton id={ticket.id} />
+						<Link href={`/components/tickets/edit?id=${ticket.id}`}>
+							<div className='edit-ticket'>
+								<FontAwesomeIcon icon={faEdit} />
+								<span className='tooltiptext'>Edit</span>
+							</div>
+						</Link>
 					</Suspense>
 				</div>
 			</div>

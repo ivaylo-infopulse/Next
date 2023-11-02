@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode, useEffect, useState } from 'react';
-import './globals.css';
+import './globals.scss';
 import { Rubik } from 'next/font/google';
 import { useRouter, usePathname } from 'next/navigation';
 import { RecoilRoot } from 'recoil';

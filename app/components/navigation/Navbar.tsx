@@ -3,11 +3,15 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from './image-2.jpg';
+import { userState } from '@/app/states/atom';
+import { useRecoilState } from 'recoil';
 import './styles.scss';
 
 export const Navbar = () => {
+	const [user, setUser] = useRecoilState(userState);
 	const handleLogOut = () => {
 		localStorage.removeItem('authData');
+		setUser('');
 	};
 
 	return (

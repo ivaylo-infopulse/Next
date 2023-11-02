@@ -15,11 +15,10 @@ const validationSchema = object({
 
 const Login = () => {
 	const navigate = useRouter();
-	const [user, setUser] = useState<string>();
+	const [user, setUser] = useRecoilState(userState);
 	const [password, setPassword] = useState<string>();
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const [users, setUsers] = useState<string[]>();
-	const [userRecoil, setUserRecoil] = useRecoilState(userState);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -30,6 +29,28 @@ const Login = () => {
 		fetchData();
 	}, []);
 
+	const generateToken = () => {
+		const token = uuidv4();
+		const expirationTime = Date.now() + 60 * 60 * 1000;
+		const authData = {
+			token: token,
+			expirationTime: expirationTime,
+		};
+		localStorage.setItem('authData', JSON.stringify(authData));
+	};
+
+	const hangleLogIn = () => {
+		const isUserExists = users?.find(
+			(data: any) => data.user === user && data.password === password
+		);
+		if (isUserExists) {
+			generateToken();
+			navigate.push('/components');
+		} else {
+			setErrors({ password: 'wrong username or password' });
+		}
+	};
+
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
@@ -37,26 +58,8 @@ const Login = () => {
 				{ user, password },
 				{ abortEarly: false }
 			);
-
 			setErrors({});
-			const userExists = users?.find(
-				(data: any) => data.user === user && data.password === password
-			);
-
-			if (userExists) {
-				const token = uuidv4();
-				const expirationTime = Date.now() + 60 * 60 * 1000;
-				const authData = {
-					token: token,
-					expirationTime: expirationTime,
-				};
-
-				localStorage.setItem('authData', JSON.stringify(authData));
-				setUserRecoil(user);
-				navigate.push('/components');
-			} else {
-				setErrors({ password: 'wrong username or password' });
-			}
+			hangleLogIn();
 		} catch (err) {
 			if (err instanceof ValidationError) {
 				const newErrors: { [key: string]: string } = {};

@@ -4,24 +4,32 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../../states/atom';
 
-type priorityTypes = 'low' | 'medium' | 'high';
+export type priorityTypes = 'low' | 'medium' | 'high';
 
 export const CreateForm = () => {
-	const router = useRouter();
+	const navigate = useRouter();
 	const [title, setTitle] = useState<string>();
 	const [body, setBody] = useState<string>();
 	const [priority, setPriority] = useState<priorityTypes>('low');
 	const [isLoading, setIsLoading] = useState(false);
 	const user = useRecoilValue(userState);
+	console.log(user);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsLoading(true);
+
+		if (!user) {
+			// Handle the case where user data is not available
+			alert('Updating failed, please try again');
+			navigate.refresh();
+		}
+
 		const ticket = {
 			title,
+			user,
 			body,
 			priority,
-			user_email: user,
 		};
 
 		const res = await fetch('http://localhost:4000/tickets', {
@@ -30,8 +38,8 @@ export const CreateForm = () => {
 			body: JSON.stringify(ticket),
 		});
 
-		res.status === 201 && router.refresh();
-		router.push('/components/tickets');
+		res.status === 201 && navigate.refresh();
+		navigate.push('/components/tickets');
 	};
 
 	return (
@@ -65,7 +73,7 @@ export const CreateForm = () => {
 					<option value='high'>High Priority</option>
 				</select>
 			</label>
-			<button className='btn-primary' disabled={isLoading}>
+			<button type='submit' className='btn-primary' disabled={isLoading}>
 				{isLoading ? 'Adding...' : 'Add Ticket'}
 			</button>
 		</form>

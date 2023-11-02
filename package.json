@@ -10,6 +10,9 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.4.2",
+		"@fortawesome/free-solid-svg-icons": "^6.4.2",
+		"@fortawesome/react-fontawesome": "^0.2.0",
 		"@types/react-dom": "18.2.13",
 		"autoprefixer": "10.4.16",
 		"eslint": "8.51.0",
@@ -19,6 +22,7 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"recoil": "^0.7.7",
+		"recoil-persist": "^5.1.0",
 		"sass": "^1.69.5",
 		"tailwindcss": "3.3.3",
 		"uuid": "^9.0.1",

@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const DeleteButton = ({ id }: { id: string }) => {
+export const DeleteButton = ({ id }: { id: string | null }) => {
 	const router = useRouter();
 
 	const handleDelete = async () => {
@@ -24,8 +26,9 @@ export const DeleteButton = ({ id }: { id: string }) => {
 	};
 
 	return (
-		<button className='btn-primary' onClick={handleDelete}>
-			Delete
-		</button>
+		<div className='delete-ticket' onClick={handleDelete}>
+			<FontAwesomeIcon icon={faTrash} />
+			<span className='tooltiptext'>Delete</span>
+		</div>
 	);
 };
