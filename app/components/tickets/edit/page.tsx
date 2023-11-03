@@ -4,6 +4,15 @@ import { priorityTypes } from '../create/CreateForm';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/app/states/atom';
+import { useFetch } from '../../hooks/useFetch';
+
+type Ticket = {
+	title: string;
+	user: string;
+	editUser: string;
+	body: string;
+	priority: priorityTypes;
+};
 
 const EditTicket = () => {
 	const navigate = useRouter();
@@ -13,23 +22,19 @@ const EditTicket = () => {
 	const [body, setBody] = useState<string>();
 	const [priority, setPriority] = useState<priorityTypes>('low');
 	const currentUser = useRecoilValue(userState);
+	const data = useFetch(
+		`http://localhost:4000/tickets/${id}`
+	) as unknown as Ticket;
 
 	useEffect(() => {
-		const fetchTicket = async () => {
-			try {
-				const response = await fetch(`http://localhost:4000/tickets/${id}`);
-				const data = await response.json();
-				setTitle(data.title);
-				setUser(data.user);
-				setBody(data.body);
-				setPriority(data.priority);
-			} catch (error) {
-				console.error('Error fetching ticket:', error);
-			}
+		const a = () => {
+			setTitle(data?.title);
+			setUser(data?.user);
+			setBody(data?.body);
+			setPriority(data?.priority);
 		};
-
-		fetchTicket();
-	}, [id]);
+		a();
+	}, [data?.body, data?.priority, data?.title, data?.user]);
 
 	const handleSubmit = async () => {
 		try {

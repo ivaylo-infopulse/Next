@@ -4,44 +4,41 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState, FormEvent, useEffect } from 'react';
 import { ValidationError } from 'yup';
 import { RegistrationSchema } from '../validation/registrationSchema';
+import { useFetch } from '../components/hooks/useFetch';
 
 const Register = () => {
 	const navigate = useRouter();
-	const [user, setUser] = useState<string>('');
+	const [newUser, setNewUser] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [confirmPass, setConfirmPass] = useState<string>('');
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const [users, setUsers] = useState<string[]>();
+	const data = useFetch('http://localhost:4000/users');
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const res = await fetch('http://localhost:4000/users');
-			const data = await res.json();
-			setUsers(data);
-		};
-		fetchData();
-	}, []);
+		setUsers(data);
+	}, [data]);
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
 			await RegistrationSchema.validate(
-				{ user, password, confirmPass, users },
+				{ user: newUser, password, confirmPass, users },
 				{ abortEarly: false }
 			);
 
 			setErrors({});
-			const userExists = users?.find((data: any) => {
-				return data.user === user;
+			const isUserExist = users?.find((data: any) => {
+				return data.user === newUser;
 			});
 
-			if (!userExists) {
+			if (!isUserExist) {
 				const response = await fetch('http://localhost:4000/users', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ user, password }),
+					body: JSON.stringify({ user: newUser, password }),
 				});
 
 				const data = await response.json();
@@ -66,8 +63,10 @@ const Register = () => {
 			<input
 				type='text'
 				placeholder='Username'
-				value={user}
-				onChange={(e: ChangeEvent<HTMLInputElement>) => setUser(e.target.value)}
+				value={newUser}
+				onChange={(e: ChangeEvent<HTMLInputElement>) =>
+					setNewUser(e.target.value)
+				}
 			/>
 			{errors.user && <div style={{ color: 'red' }}>{errors.user}</div>}
 
