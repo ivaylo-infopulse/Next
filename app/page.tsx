@@ -15,12 +15,14 @@ const validationSchema = object({
 
 const Login = () => {
 	const navigate = useRouter();
-	const [user, setUser] = useRecoilState(userState);
+	const isUser = useRecoilState(userState);
+	const [user, setUser] = useState(isUser[0]);
 	const [password, setPassword] = useState<string>();
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const [users, setUsers] = useState<string[]>();
 
 	useEffect(() => {
+		setUser('');
 		const fetchData = async () => {
 			const res = await fetch('http://localhost:4000/users');
 			const data = await res.json();
