@@ -13,7 +13,7 @@ export const useFetch = (url: string) => {
 				console.error('Error fetching data:', error);
 			}
 		})();
-	}, [data, url]);
+	}, [url]);
 
 	return data;
 };
