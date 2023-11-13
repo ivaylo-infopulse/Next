@@ -33,7 +33,7 @@ const Login = () => {
 
 	const generateToken = () => {
 		const token = uuidv4();
-		const expirationTime = Date.now() + 60 * 60 * 1000;
+		const expirationTime = Date.now() + 60 * 6 * 1000;
 		const authData = {
 			token: token,
 			expirationTime: expirationTime,
