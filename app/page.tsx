@@ -15,14 +15,13 @@ const validationSchema = object({
 
 const Login = () => {
 	const navigate = useRouter();
-	const isUser = useRecoilState(userState);
-	const [user, setUser] = useState(isUser[0]);
+	const [isUser, setIsUser] = useRecoilState(userState);
+	const [user, setUser] = useState('');
 	const [password, setPassword] = useState<string>();
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const [users, setUsers] = useState<string[]>();
 
 	useEffect(() => {
-		setUser('');
 		const fetchData = async () => {
 			const res = await fetch('http://localhost:4000/users');
 			const data = await res.json();
@@ -47,6 +46,7 @@ const Login = () => {
 		);
 		if (isUserExists) {
 			generateToken();
+			setIsUser(user);
 			navigate.push('/components');
 		} else {
 			setErrors({ password: 'wrong username or password' });

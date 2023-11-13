@@ -1,7 +1,4 @@
 import Link from 'next/link';
-import { DeleteButton } from './delete/DeleteButton';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 async function getTickets() {
 	await new Promise((resolve) => setTimeout(resolve, 500));
@@ -14,6 +11,7 @@ async function getTickets() {
 }
 
 export interface ticketsObj {
+	status: string;
 	id: string;
 	title: string;
 	user: string;
@@ -24,26 +22,32 @@ export interface ticketsObj {
 export const TicketList = async () => {
 	const tickets: ticketsObj[] = await getTickets();
 
+	const getTicket: any = (status: any) => {
+		return tickets.map((ticket) => (
+			<>
+				{ticket.status === status && (
+					<div key={ticket.id} className='card my-5'>
+						<Link href={`/components/tickets/${ticket.id}`}>
+							<h3>{ticket.title}</h3>
+							<p>{ticket.body?.slice(0, 200)}...</p>
+							<div className={`pill ${ticket.priority}`}>
+								{ticket.priority} priority
+							</div>
+						</Link>
+					</div>
+				)}
+			</>
+		));
+	};
+
 	return (
 		<div className='nav-content'>
-			{tickets.map((ticket) => (
-				<div key={ticket.id} className='card my-5'>
-					<Link href={`/components/tickets/${ticket.id}`}>
-						<h3>{ticket.title}</h3>
-						<p>{ticket.body?.slice(0, 200)}...</p>
-						<div className={`pill ${ticket.priority}`}>
-							{ticket.priority} priority
-						</div>
-					</Link>
-					<DeleteButton id={ticket.id} />
-					<Link href={`/components/tickets/edit?id=${ticket.id}`}>
-						<div className='edit-ticket'>
-							<FontAwesomeIcon icon={faEdit} />
-							<span className='tooltiptext'>Edit</span>
-						</div>
-					</Link>
-				</div>
-			))}
+			<table className='tickets-table'>
+				<th>To Do {getTicket('to-do')} </th>
+				<th>In Progres {getTicket('in-progres')}</th>
+				<th>In Review {getTicket('in-review')}</th>
+				<th>Done {getTicket('done')}</th>
+			</table>
 			{tickets.length === 0 && (
 				<p className='text-center'>There are no open tickets, low!</p>
 			)}

@@ -7,6 +7,7 @@ import { userState } from '@/app/states/atom';
 import { useFetch } from '../../hooks/useFetch';
 
 type Ticket = {
+	status: string;
 	title: string;
 	user: string;
 	editUser: string;
@@ -17,6 +18,7 @@ type Ticket = {
 const EditTicket = () => {
 	const navigate = useRouter();
 	const id = useSearchParams().get('id');
+	const [status, setStatus] = useState<string>();
 	const [title, setTitle] = useState<string>();
 	const [user, setUser] = useState<string>();
 	const [body, setBody] = useState<string>();
@@ -27,18 +29,19 @@ const EditTicket = () => {
 	) as unknown as Ticket;
 
 	useEffect(() => {
-		const a = () => {
+		(() => {
+			setStatus(data?.status);
 			setTitle(data?.title);
 			setUser(data?.user);
 			setBody(data?.body);
 			setPriority(data?.priority);
-		};
-		a();
-	}, [data?.body, data?.priority, data?.title, data?.user]);
+		})();
+	}, [data?.body, data?.priority, data?.status, data?.title, data?.user]);
 
 	const handleSubmit = async () => {
 		try {
 			const ticket = {
+				status,
 				title,
 				user,
 				editUser: currentUser,
@@ -66,6 +69,15 @@ const EditTicket = () => {
 		<div className='nav-content'>
 			<form onSubmit={handleSubmit} className='w-1/2'>
 				<h1>Edit Ticket</h1>
+				<label>
+					<span>Status:</span>
+					<select value={status} onChange={(e) => setStatus(e.target.value)}>
+						<option value='to-do'>To Do</option>
+						<option value='in-progres'>In Progres</option>
+						<option value='in-review'>In Review</option>
+						<option value='done'>Done</option>
+					</select>
+				</label>
 				<label>
 					<span>Title:</span>
 					<input

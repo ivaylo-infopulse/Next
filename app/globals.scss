@@ -40,6 +40,10 @@ main nav {
 	@apply border-0;
 }
 
+.tickets-list {
+	border: none;
+}
+
 /* button styles */
 button {
 	@apply px-3 py-2 
@@ -220,4 +224,15 @@ form {
 .ticket-managers {
 	display: flex;
 	flex-direction: column;
+}
+
+.tickets-table {
+	display: flex;
+	justify-content: space-between;
+
+	& th {
+		width: 23%;
+		padding-right: 20px;
+		border-right: 2px solid rgba(224, 224, 224, 0.82);
+	}
 }

@@ -1,6 +1,7 @@
 {
 	"tickets": [
 		{
+			"status": "in-progres",
 			"title": "first ticket",
 			"user": "snupi1530",
 			"editUser": "ivo",
@@ -9,13 +10,16 @@
 			"id": 1
 		},
 		{
+			"status": "to-do",
 			"title": "my task",
 			"user": "snupi1530",
+			"editUser": "",
 			"body": "to be done!",
 			"priority": "low",
 			"id": 3
 		},
 		{
+			"status": "to-do",
 			"title": "another one",
 			"user": "ivo",
 			"editUser": "snupi1530",

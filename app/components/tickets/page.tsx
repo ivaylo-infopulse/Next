@@ -5,7 +5,7 @@ import Loading from '@/app/loading';
 const page = () => {
 	return (
 		<>
-			<nav>
+			<nav className='tickets-list'>
 				<div>
 					<h2>Tickets</h2>
 					<p>

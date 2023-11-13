@@ -26,6 +26,7 @@ export const CreateForm = () => {
 		}
 
 		const ticket = {
+			status: 'to-do',
 			title,
 			user,
 			body,
