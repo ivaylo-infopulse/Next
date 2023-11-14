@@ -70,15 +70,6 @@ const EditTicket = () => {
 			<form onSubmit={handleSubmit} className='w-1/2'>
 				<h1>Edit Ticket</h1>
 				<label>
-					<span>Status:</span>
-					<select value={status} onChange={(e) => setStatus(e.target.value)}>
-						<option value='to-do'>To Do</option>
-						<option value='in-progres'>In Progres</option>
-						<option value='in-review'>In Review</option>
-						<option value='done'>Done</option>
-					</select>
-				</label>
-				<label>
 					<span>Title:</span>
 					<input
 						required

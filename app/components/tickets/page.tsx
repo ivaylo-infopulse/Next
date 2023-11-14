@@ -7,9 +7,9 @@ const page = () => {
 		<>
 			<nav className='tickets-list'>
 				<div>
-					<h2>Tickets</h2>
+					<h2>Task Board Tickets</h2>
 					<p>
-						<small>Currently open tickets</small>
+						<small>Currently open tickets in the task board</small>
 					</p>
 				</div>
 			</nav>

@@ -1,29 +1,29 @@
 {
 	"tickets": [
 		{
-			"status": "in-progres",
-			"title": "first ticket",
+			"status": "in-progress",
+			"title": "Update status in DB",
 			"user": "snupi1530",
 			"editUser": "ivo",
-			"body": "new ticket",
+			"body": "Currently when drag and drop ticket and refresh page stats is not updated, so please make sure status is updated in DB when drag and drop ticket.",
 			"priority": "medium",
 			"id": 1
 		},
 		{
 			"status": "to-do",
-			"title": "my task",
+			"title": "Chage description",
 			"user": "snupi1530",
 			"editUser": "",
-			"body": "to be done!",
+			"body": "Change body input of the ticket to description!",
 			"priority": "low",
 			"id": 3
 		},
 		{
 			"status": "to-do",
-			"title": "another one",
+			"title": "Expetimental ticket",
 			"user": "ivo",
 			"editUser": "snupi1530",
-			"body": "one more",
+			"body": "Lorem ipsum dolor sit amet, consectetur adiLorem ipsum dolor sit amet, consectetur adiLorem ipsum dolor sit amet, consectetur adiLorem ipsum dolor sit amet, consectetur adi",
 			"priority": "high",
 			"id": 4
 		}
