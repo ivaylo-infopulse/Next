@@ -8,12 +8,25 @@ export const DnDTicket = ({ tickets }) => {
 		e.dataTransfer.setData('text/plain', taskId.toString());
 	};
 
-	const handleDrop = (e, targetStatus) => {
+	const handleDrop = async (e, targetStatus) => {
 		const taskId = parseInt(e.dataTransfer.getData('text/plain'));
 		const newItems = items.map((item) =>
 			item.id === taskId ? { ...item, status: targetStatus } : item
 		);
 		setItems(newItems);
+
+		try {
+			const updatedTicket = newItems.find((item) => item.id === taskId);
+			await fetch(`http://localhost:4000/tickets/${taskId}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatedTicket),
+			});
+		} catch (error) {
+			console.error('Error updating ticket status:', error);
+		}
 	};
 
 	const getTicket = (status, columnName) => {
