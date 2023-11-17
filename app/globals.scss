@@ -237,11 +237,25 @@ form {
 
 	& th {
 		width: 23%;
-		padding-right: 20px;
+		padding: 0px 10px;
 		border-right: 2px solid rgba(224, 224, 224, 0.82);
+		border-left: 2px solid rgba(224, 224, 224, 0.82);
 	}
 }
 
 .column-wrapper {
-	height: 100%;
+	height: 110%;
+}
+
+.column-wrapper.hovered {
+	margin: 0px -12px;
+	padding: 0px 10px;
+	border-right: 2px solid rgba(53, 53, 53, 0.82);
+	border-left: 2px solid rgba(53, 53, 53, 0.82);
+}
+
+.dragging {
+	background: red;
+	// height: 100px;
+	// width: 100px;
 }

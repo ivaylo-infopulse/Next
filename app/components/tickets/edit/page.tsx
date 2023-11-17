@@ -79,7 +79,7 @@ const EditTicket = () => {
 					/>
 				</label>
 				<label>
-					<span>Body:</span>
+					<span>Description:</span>
 					<input
 						required
 						type='text'

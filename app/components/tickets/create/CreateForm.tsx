@@ -55,7 +55,7 @@ export const CreateForm = () => {
 				/>
 			</label>
 			<label>
-				<span>Body:</span>
+				<span>Description:</span>
 				<input
 					required
 					type='text'

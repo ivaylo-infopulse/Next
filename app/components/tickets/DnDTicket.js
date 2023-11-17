@@ -3,9 +3,15 @@ import { useState } from 'react';
 
 export const DnDTicket = ({ tickets }) => {
 	const [items, setItems] = useState(tickets);
+	const [hoveredColumn, setHoveredColumn] = useState(null);
 
 	const handleDragStart = (e, taskId) => {
 		e.dataTransfer.setData('text/plain', taskId.toString());
+	};
+
+	const handleDragOver = (e, status) => {
+		e.preventDefault();
+		setHoveredColumn(status);
 	};
 
 	const handleDrop = async (e, targetStatus) => {
@@ -14,6 +20,7 @@ export const DnDTicket = ({ tickets }) => {
 			item.id === taskId ? { ...item, status: targetStatus } : item
 		);
 		setItems(newItems);
+		setHoveredColumn(null);
 
 		try {
 			const updatedTicket = newItems.find((item) => item.id === taskId);
@@ -30,11 +37,12 @@ export const DnDTicket = ({ tickets }) => {
 	};
 
 	const getTicket = (status, columnName) => {
+		const isHovered = hoveredColumn === status;
 		return (
 			<div
 				onDrop={(e) => handleDrop(e, status)}
-				onDragOver={(e) => e.preventDefault()}
-				className='column-wrapper'
+				onDragOver={(e) => handleDragOver(e, status)}
+				className={`column-wrapper ${isHovered ? 'hovered' : ''}`}
 			>
 				<h3>{columnName}</h3>
 				{items
