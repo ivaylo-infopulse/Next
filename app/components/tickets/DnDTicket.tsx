@@ -1,20 +1,41 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-export const DnDTicket = ({ tickets }) => {
-	const [items, setItems] = useState(tickets);
-	const [hoveredColumn, setHoveredColumn] = useState(null);
+interface Ticket {
+	id: number;
+	title: string;
+	body?: string;
+	priority: string;
+	status: string;
+}
 
-	const handleDragStart = (e, taskId) => {
+interface DnDTicketProps {
+	tickets: Ticket[];
+}
+
+export const DnDTicket: React.FC<DnDTicketProps> = ({ tickets }) => {
+	const [items, setItems] = useState<Ticket[]>(tickets);
+	const [hoveredColumn, setHoveredColumn] = useState<string | null>(null);
+
+	const handleDragStart = (
+		e: React.DragEvent<HTMLDivElement>,
+		taskId: number
+	) => {
 		e.dataTransfer.setData('text/plain', taskId.toString());
 	};
 
-	const handleDragOver = (e, status) => {
+	const handleDragOver = (
+		e: React.DragEvent<HTMLDivElement>,
+		status: string
+	) => {
 		e.preventDefault();
 		setHoveredColumn(status);
 	};
 
-	const handleDrop = async (e, targetStatus) => {
+	const handleDrop = async (
+		e: React.DragEvent<HTMLDivElement>,
+		targetStatus: string
+	) => {
 		const taskId = parseInt(e.dataTransfer.getData('text/plain'));
 		const newItems = items.map((item) =>
 			item.id === taskId ? { ...item, status: targetStatus } : item
@@ -36,7 +57,7 @@ export const DnDTicket = ({ tickets }) => {
 		}
 	};
 
-	const getTicket = (status, columnName) => {
+	const getTicket = (status: string, columnName: string) => {
 		const isHovered = hoveredColumn === status;
 		return (
 			<div
